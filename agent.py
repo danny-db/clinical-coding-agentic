@@ -95,7 +95,7 @@ vs_agent = create_react_agent(llm, tools=tools)
 
 # TODO update the max number of iterations between supervisor and worker nodes
 # before returning to the user
-MAX_ITERATIONS = 5
+MAX_ITERATIONS = 3
 
 worker_descriptions = {
     "Genie": genie_agent_description,
