@@ -32,7 +32,7 @@ from pydantic import BaseModel
 # You can find the ID in the URL of the genie room /genie/rooms/<GENIE_SPACE_ID>
 # Example description: This Genie agent can answer questions based on a database containing tables related to enterprise software sales, including accounts, opportunities, opportunity history, fiscal periods, quotas, targets, teams, and users. Use Genie to fetch and analyze data from these tables by specifying the relevant columns and filters. Genie can execute SQL queries to provide precise data insights based on your questions.
 GENIE_SPACE_ID = "01f0678babbe18fdbbd7729053d07ab9" # The one after
-genie_agent_description = "This is a Genie agent that you can converse with to get answers to questions. Try to provide simple questions and provide history if you had prior conversations. Use this tool to query HL7 patient data, focus on finding allergy data for a patient.  Do not use the Genie agent to get ICD-10 definition.  AL1_2 is not ICD-10 code.  Don't confused AL1_2 with ICD-10 code."
+genie_agent_description = "This is a agent that you can converse with to get answers to questions. Try to provide simple questions and provide history if you had prior conversations. Use this tool to query HL7 patient data, focus on finding allergy data for a patient"
 
 genie_agent = GenieAgent(
     genie_space_id=GENIE_SPACE_ID,
@@ -77,7 +77,7 @@ vs_index_full_name = f"{catalog_name}.{schema_name}.{vs_index_name}"
 # code_agent = create_react_agent(llm, tools=tools)
 
 vs_agent_description = (
-    "The Vector Search agent specializes in looking into ICD-10 definitions from unstructured text stored in Vector Search.  For questions that related to ICD-10 clinical coding, use this tool.",
+    "The VectorSearch agent specializes in looking into ICD-10 definitions from unstructured text stored in Vector Search.",
 )
 vector_search_tools = [
         VectorSearchRetrieverTool(
@@ -95,7 +95,7 @@ vs_agent = create_react_agent(llm, tools=tools)
 
 # TODO update the max number of iterations between supervisor and worker nodes
 # before returning to the user
-MAX_ITERATIONS = 3
+MAX_ITERATIONS = 5
 
 worker_descriptions = {
     "Genie": genie_agent_description,
@@ -106,7 +106,7 @@ formatted_descriptions = "\n".join(
     f"- {name}: {desc}" for name, desc in worker_descriptions.items()
 )
 
-system_prompt = f"You are analysing the HL7 patient data with allergy.  Get the patient data with the genie_query tool.  Focus on segment_id equal to AL1.  Focus on the column AL1_3 only, ignore column AL1_2, which is the description of the allergy.  Use vector search tool to get the ICD10 text chunk for ICD10 clinical code identification based on the allergy description.  Decide between routing between the following workers or ending the conversation if an answer is provided. \n{formatted_descriptions}"
+system_prompt = f"You are analysing the HL7 patient data with allergy.  Get the patient data with the genie_query tool.  Focus on segment_id equal to AL1.  Focus on AL1_3 in the field, which is the description of the allergy.  Use vector search to get the ICD10 text chunk for ICD10 clinical code identification based on the allergy description.  Decide between routing between the following workers or ending the conversation if an answer is provided. \n{formatted_descriptions}"
 options = ["FINISH"] + list(worker_descriptions.keys())
 FINISH = {"next_node": "FINISH"}
 

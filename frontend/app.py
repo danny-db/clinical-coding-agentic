@@ -205,7 +205,7 @@ if prompt := st.chat_input("Ask about ICD-10 codes, clinical documentation, or c
                 assistant_response = query_endpoint(
                     endpoint_name=os.getenv("SERVING_ENDPOINT"),
                     messages=st.session_state.messages,
-                    max_tokens=400,
+                    max_tokens=150000,
                 )["content"]
                 st.markdown(assistant_response)
             except Exception as e:
