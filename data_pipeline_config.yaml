@@ -1,0 +1,19 @@
+chunking_config:
+  chunk_overlap_tokens: 256
+  chunk_size_tokens: 1024
+  class_path: __main__.RecursiveTextSplitterChunkingConfig
+  embedding_model_endpoint: databricks-gte-large-en
+class_path: __main__.DataPipelineConfig
+output:
+  chunked_docs_table: danny_catalog.clinical_coding.icd10_docs_chunked
+  class_path: __main__.DataPipelineOutputConfig
+  parsed_docs_table: danny_catalog.clinical_coding.icd10_docs
+  vector_index: danny_catalog.clinical_coding.icd10_docs_chunked_index
+  vector_search_endpoint: one-env-shared-endpoint-8
+source:
+  class_path: __main__.UCVolumeSourceConfig
+  uc_catalog_name: danny_catalog
+  uc_schema_name: clinical_coding
+  uc_volume_name: icd10
+  volume_path: /Volumes/danny_catalog/clinical_coding/icd10
+  volume_uc_fqn: danny_catalog.clinical_coding.icd10
