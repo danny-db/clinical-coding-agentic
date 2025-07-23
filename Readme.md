@@ -16,3 +16,4 @@ This Databricks demo implements an intelligent clinical coding system that lever
   - **Genie Agent**: Retrieves structured HL7 patient data from processed tables
   - **Vector Search Agent**: Retrieves ICD-10 definition text chunks and maps clinical text to ICD-10 codes
 
+![Clinical Coding Assistant](image/cat.png)
